@@ -10,7 +10,7 @@ from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_ollama import ChatOllama
 import json
 from langchain_core.messages import HumanMessage, SystemMessage
-from prompt import router_instructions, doc_grader_instructions, doc_grader_prompt, rag_prompt, hallucination_grader_instructions
+from prompt import router_instructions, doc_grader_instructions, doc_grader_prompt, rag_prompt, hallucination_grader_instructions, hallucination_grader_prompt
 from langchain.text_splitter import CharacterTextSplitter
 
 # Load environment variables
@@ -159,3 +159,9 @@ rag_prompt_formatted = rag_prompt.format(context=doc_txt, question=Question)
 generation = llm.invoke([HumanMessage(content=rag_prompt_formatted)])
 print(generation.content)
 print('--------------------------------')
+
+
+
+hallucination_grader_prompt_formatted = hallucination_grader_prompt.format(documents=doc_txt, generation=generation.content)
+result = llm_json_mode.invoke([SystemMessage(content=hallucination_grader_instructions), HumanMessage(content=hallucination_grader_prompt_formatted)])
+print(json.loads(result.content))

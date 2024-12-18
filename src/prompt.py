@@ -59,3 +59,11 @@ A score of no means that the student's answer does not meet all of the criteria.
 Explain your reasoning in a step-by-step manner to ensure your reasoning and conclusion are correct. 
 Avoid simply stating the correct answer at the outset.
 """
+
+
+# Grader prompt
+hallucination_grader_prompt = """
+FACTS: 
+{documents} \n\n STUDENT ANSWER: {generation}. 
+Return JSON with two two keys, binary_score is 'yes' or 'no' score to indicate whether the STUDENT ANSWER is grounded in the FACTS. And a key, explanation, that contains an explanation of the score."""
+
